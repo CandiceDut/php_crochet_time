@@ -20,7 +20,7 @@
                 <a class="nav-link active" aria-current="page" href="index.php">Doudous</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="admin.php">Admin</a>
+                <a class="nav-link" href="identification.html">Admin</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="panier.php">Panier</a>
