@@ -1,22 +1,22 @@
 <?php
 
-    if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
-        $uploadDir = 'Images/';
-        $fileKey = 'image';
+if (isset($_POST['submit'])) 
+{
+    $uploadDir = 'Images/';
 
-        if ($_FILES[$fileKey]['error'] == 0) {
-            $filename = basename($_FILES[$fileKey]['name']);
-            $uploadFile = $uploadDir . $filename;
+    if (is_uploaded_file($_FILES[$filename]['tmp_name'])) 
+    {   print "<p> Le fichier $filename a été téléchargé avec succès dans le dossier uploads.</p>";
+        
+        $filename = basename($_FILES[$filename]['name']);
+        $uploadFile = $uploadDir . $filename; 
 
-            if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile)) {
-                echo "<p>Le fichier $filename a été téléchargé avec succès dans le dossier $uploadDir.</p>";                
-            }
-            else {
-                echo "<p>Erreur lors du téléchargement du fichier $filename.</p>";
-            }
-        }
-        else {
-            echo "<p>Aucun fichier téléchargé ou une erreur est survenue.</p>";
+        if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile)) 
+        {
+            print "<p> Le fichier $filename a été téléchargé avec succès dans le dossier uploads.</p>";
+        } 
+        else 
+        {
+            print "<p> Erreur lors du téléchargement du fichier $filename.</p>";
         }
 
         $titre = $_POST['Titre'];
@@ -55,9 +55,13 @@
             $query = "SELECT * FROM CROCHET C WHERE C.titre = $titre";
             $result= mysqli_query($link,$query);
             mysqli_close($link);
+    } 
+    else 
+    {
+        print "<p> Aucun fichier de téléchargé ou une erreur est survenue.</p>";
     }
-    else {
-        echo "<p>Veuillez remplir tous les champs du formulaire.</p>";
-    }
+
+}
+
 
 ?>
