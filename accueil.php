@@ -7,6 +7,8 @@
     <title>Crochet Time</title>
 </head>
 <body>
+
+
     <?php
         // On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
         //session_start ();
@@ -15,10 +17,9 @@
         echo '<br />';
         echo '<br> <a href="./logout.php">Déconnection</a>';
         
-        if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) {
-            // echo 'T\'es pas connecté. <br>';
-            // echo '<a href="./logout.php">Se connecter</a>';
-            header ('location: identification.html');
+        if (!(isset($_SESSION['login']) && isset($_SESSION['pwd']))) {
+            echo 'T\'es pas connecté. <br>';
+            echo '<a href="./logout.php">Se connecter</a>';
         }
     ?>
 </body>

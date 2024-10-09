@@ -9,7 +9,7 @@
         print "<form action='upload.php' method='POST' enctype='multipart/form-data'>";
         print "Titre <br><INPUT TYPE='TEXT' NAME='Titre' SIZE='20' MAXSIZE='50' ><BR>";
         print "Prix<br><INPUT TYPE='TEXT' NAME='Prix' SIZE='20' MAXSIZE='50' ><BR>";
-        print "Image<br><input type='file' name='image'<br><br><BR>";
+        print "Image<br><input type='file' name='image' required><br><br><BR>";
        
         print "<br><INPUT TYPE='SUBMIT' VALUE='OK'></form>";
 
@@ -19,5 +19,6 @@
     else 
     {
         header("Location: identification.html");
+        exit();
     }
 ?>

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
-    <title>Crochet</title>
+    <title>Crochet Time</title>
 </head>
 <body class='container'>
     <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Crochet'Time</a>
+            <a class="navbar-brand" href="index.php">Crochet Time</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,7 +31,7 @@
     </nav>
     </header>
     <main>
-        <h1>Les doudous en crochet</h1>
+        <h1>Les doudous au crochet</h1>
         <?php
         $bdd= "zdavaud_bd"; 
         $host= "lakartxela.iutbayonne.univ-pau.fr";
@@ -58,7 +58,7 @@
                 <!--Les cartes
                 <a href="recettes.php?id_categorie=<?= $result['id'] ?>" class="col mb-3">-->
                     <div class="card" style="width: 10rem;">
-                        <img src="<?= "Images/" . $result['urlImSmall'] ?>" class="card-img-top" alt="" width="900" weight="800">
+                        <img src="<?= "Images/" . $result['image'] ?>" class="card-img-top" alt="" width="900" weight="800">
                         <div class="card-body bg-primary">
                             <h5><?= $result['titre'] ?></h5>
                         </div>
