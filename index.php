@@ -59,6 +59,7 @@
                     <img src="imagesPetites.php?image=<?= $item['image'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
+                        <button type="button" class="btn btn-secondary">Panier</button>
                     </div>
                 </div>
                 </a>
