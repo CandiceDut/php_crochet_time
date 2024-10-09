@@ -18,6 +18,43 @@
         else {
             echo "<p>Aucun fichier téléchargé ou une erreur est survenue.</p>";
         }
+
+        $titre = $_POST['Titre'];
+        $prix = (int)$_POST['Prix'];
+        $image = $_FILES['image'];
+        
+        $bdd= "zdavaud_bd"; 
+            $host= "lakartxela.iutbayonne.univ-pau.fr";
+            $user= "zdavaud_bd"; 
+            $pass= "zdavaud_bd"; 
+            $link= new mysqli($host,$user,$pass,$bdd);
+            if ($link->connect_error) {
+                die("Échec de la connexion : " . $conn->connect_error);
+            }
+            $stmt = $link->prepare("INSERT INTO CROCHET (titre, prix, image) VALUES (?, ?, ?)");
+            if ($stmt === false) {
+                die("Erreur lors de la préparation de la requête : " . $link->error);
+            }
+
+            $stmt->bind_param("sib", $titre, $prix, $image);
+            // Exécuter la requête
+            if ($stmt->execute()) {
+                echo "Nouvel enregistrement inséré avec succès.";
+            } else {
+                echo "Erreur lors de l'insertion : " . $stmt->error;
+            }
+
+            // Fermer la requête et la connexion
+            $stmt->close();
+            
+            if (mysqli_connect_errno())
+            {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                exit();
+            }
+            $query = "SELECT * FROM CROCHET C WHERE C.titre = $titre";
+            $result= mysqli_query($link,$query);
+            mysqli_close($link);
     }
     else {
         echo "<p>Veuillez remplir tous les champs du formulaire.</p>";
