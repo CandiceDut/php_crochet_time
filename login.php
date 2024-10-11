@@ -12,7 +12,7 @@
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['pwd'] = $_POST['pwd'];
     // on redirige notre visiteur vers une page de notre section membre
-    header ('location: admin.php');
+    header ('location: admin.html');
     }
     else {
     echo '<body onLoad="alert(\'Membre non reconnu...\')">';

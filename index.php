@@ -54,9 +54,9 @@
             <?php
             foreach ($result as $item) {
                 ?>
-                <a href="imagesGrde.php?image=<?=$item['image'] ?>">
+                <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>">
                 <div class="card" style="width: 10rem;">
-                    <img src="imagesPetites.php?image=<?= $item['image'] ?>" class="card-img-top">
+                    <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
                         <button type="button" class="btn btn-secondary">Panier</button>

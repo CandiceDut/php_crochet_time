@@ -27,12 +27,18 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
             if ($link->connect_error) {
                 die("Échec de la connexion : " . $conn->connect_error);
             }
-            $stmt = $link->prepare("INSERT INTO CROCHET (titre, prix, image) VALUES (?, ?, ?)");
+
+            //recherche du prochain identifiant
+            $query = "SELECT max(id)+1 as newId FROM CROCHET";
+            $result= mysqli_query($link,$query);
+            $newId = $result->fetch_assoc()['newId'];
+            
+            //Insertion du nouvel article
+            $stmt = $link->prepare("INSERT INTO CROCHET (id, titre, prix, urlimage) VALUES (?, ?, ?, ?)");
             if ($stmt === false) {
                 die("Erreur lors de la préparation de la requête : " . $link->error);
             }
-
-            $stmt->bind_param("sib", $titre, $prix, $image);
+            $stmt->bind_param("isis", $newId, $titre, $prix, $filename);
             // Exécuter la requête
             if ($stmt->execute()) {
                 echo "Nouvel enregistrement inséré avec succès.";
@@ -48,16 +54,13 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
                 echo "Failed to connect to MySQL: " . mysqli_connect_error();
                 exit();
             }
-            $query = "SELECT * FROM CROCHET C WHERE C.titre = $titre";
-            $result= mysqli_query($link,$query);
+            
             mysqli_close($link);
     } 
     else 
     {
         print "<p> Aucun fichier de téléchargé ou une erreur est survenue.</p>";
     }
-
 }
-
 
 ?>
