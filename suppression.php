@@ -36,7 +36,6 @@
                 <table>
                     <tr>
                         <th>Selectionner</th>
-                        <th>ID</th>
                         <th>Titre</th>
                         <th>Prix</th>
                         <th>Image</th>
@@ -47,7 +46,6 @@
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td><input type=checkbox name=ids[] value=" . $row['id'] . "></td>";
-                        echo "<td>" . $row['id'] . "</td>";
                         echo "<td>" . $row['titre'] . "</td>";
                         echo "<td>" . $row['prix'] . "</td>";
                         echo "<td>" . $row['urlimage'] . "</td>";

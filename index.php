@@ -1,10 +1,11 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
-    <title>Crochet Time</title>
+    <title>Crochet</title>
 </head>
 <body class='container'>
     <header>
@@ -59,7 +60,10 @@
                     <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
-                        <button type="button" class="btn btn-secondary">Ajouter au panier</button>
+                        <form method="post" action="ajoutPanier.php">
+                            <input type="hidden" name="id_article" value="<?= $item['id'] ?>">
+                            <button type="submit" class="btn btn-secondary">Panier</button>
+                        </form>
                     </div>
                 </div>
                 </a>
