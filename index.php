@@ -54,7 +54,7 @@
             <?php
             foreach ($result as $item) {
                 ?>
-                <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>">
+                <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>"class ="col mb-3">
                 <div class="card" style="width: 10rem;">
                     <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
