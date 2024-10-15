@@ -74,11 +74,17 @@
                             echo "<tr>";
                             echo "<td>" . $row['titre'] . "</td>";
                             echo "<td text-align-center>" . $row['prix'] . "</td>";
-                            echo "<td> <button type='submit' class='btn btn-secondary'>Supprimer</button> </td>";
+                            ?>
+                            <form method="post" action= "suppPanier.php">
+                                <input type="hidden" name="id_article" value="<?= $row['id'] ?>">
+                                <td><button type="submit" class="btn btn-secondary">Supprimer</button></td>
+                            </form>
+                            <?php
                             echo "</tr>";
                             echo "</tbody>";
                             $total = $total + $row['prix'];
                         }
+
                         ?>
                     </table>
                     <br>
