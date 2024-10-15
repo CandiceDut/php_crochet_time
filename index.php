@@ -62,7 +62,7 @@
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
                         <form method="post" action="ajoutPanier.php">
                             <input type="hidden" name="id_article" value="<?= $item['id'] ?>">
-                            <button type="submit" class="btn btn-secondary">Panier</button>
+                            <button type="submit" class="btn btn-secondary">Ajouter au panier</button>
                         </form>
                     </div>
                 </div>

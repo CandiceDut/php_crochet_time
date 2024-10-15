@@ -52,7 +52,8 @@
                         echo "<tbody>";
                         echo "<tr>";
                         echo "<td>" . $row['titre'] . "</td>";
-                        echo "<td>" . $row['prix'] . "</td>";
+                        echo "<td text-align-center>" . $row['prix'] . "</td>";
+                        echo "<td> <button type='submit' class='btn btn-secondary'>Supprimer</button> </td>";
                         echo "</tr>";
                         echo "</tbody>";
                         $total = $total + $row['prix'];
