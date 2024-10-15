@@ -1,7 +1,19 @@
 <?php
     // On démarre la session
-    session_start ();
+    session_start (); ?>
 
+<!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
+            <title>Panier</title>
+        </head>
+        <body>
+        <h1>Articles choisis :</h1>
+
+<?php
     // On récupère nos variables de session
         $bdd= "zdavaud_bd"; 
         $host= "lakartxela.iutbayonne.univ-pau.fr";
@@ -17,24 +29,9 @@
         
         $panier = implode(',', $_SESSION['panier']);
 
-        } else {
-            echo "Votre panier est vide.";
-        }
         $sql = "SELECT * FROM CROCHET WHERE id IN ($panier)";
         $result = $link->query($sql);
         ?>
-    
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
-            <title>Panier</title>
-        </head>
-        <body>
-    
-            <h1>Articles choisis :</h1>
     
             <form method="post" action="">
                 <!--création tableau enregistrements-->
@@ -68,7 +65,12 @@
             // Afficher le prix total 
             echo "prix total : " . $total . "€";
             $link->close();
-            ?>
+            
+
+        } else {
+            echo "Votre panier est vide.";
+        }?>
+       
             
            <br><a href="./logout.php">Déconnection</a>
     
