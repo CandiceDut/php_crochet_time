@@ -10,6 +10,7 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
+            <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
             <title>Gestion des enregistrements</title>
         </head>
         <body class='container'>
@@ -45,6 +46,7 @@
         print "<form action='upload.php' method='POST' enctype='multipart/form-data'>";
         print "Titre <br><INPUT TYPE='TEXT' NAME='Titre' SIZE='20' MAXSIZE='50' ><BR>";
         print "Prix<br><INPUT TYPE='TEXT' NAME='Prix' SIZE='20' MAXSIZE='50' ><BR>";
+        print "Quantité<br><INPUT TYPE='INT' NAME='Quantite' SIZE='20' MAXSIZE='50' ><BR>";
         print "Image<br><input type='file' name='image'<br><br><BR>";
        
         print "<br><INPUT TYPE='SUBMIT' VALUE='OK'></form>";

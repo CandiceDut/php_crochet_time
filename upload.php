@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
+if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'])) {
     $uploadDir = 'Images/';
     $fileKey = 'image';
 
@@ -8,15 +8,17 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
         $filename = basename($_FILES[$fileKey]['name']);
         $uploadFile = $uploadDir . $filename;
 
-        if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile)) {
-            echo "<p>Le fichier $filename a été téléchargé avec succès dans le dossier $uploadDir.</p>";                
-        }
-        else {
-            echo "<p>Erreur lors du téléchargement du fichier $filename.</p>";
-        }
+        move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile);
+        // if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile)) {
+        //     echo "<p>Le fichier $filename a été téléchargé avec succès dans le dossier $uploadDir.</p>";                
+        // }
+        // else {
+        //     echo "<p>Erreur lors du téléchargement du fichier $filename.</p>";
+        // }
 
         $titre = $_POST['Titre'];
         $prix = (int)$_POST['Prix'];
+        $quantite = (int)$_POST['Quantite'];
         $image = $_FILES['image'];
         
         $bdd= "zdavaud_bd"; 
@@ -34,26 +36,30 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_FILES['image'])) {
             $newId = $result->fetch_assoc()['newId'];
             
             //Insertion du nouvel article
-            $stmt = $link->prepare("INSERT INTO CROCHET (id, titre, prix, urlimage) VALUES (?, ?, ?, ?)");
+            $stmt = $link->prepare("INSERT INTO CROCHET (id, titre, prix, quantite, urlimage) VALUES (?, ?, ?, ?, ?)");
             if ($stmt === false) {
                 die("Erreur lors de la préparation de la requête : " . $link->error);
             }
-            $stmt->bind_param("isis", $newId, $titre, $prix, $filename);
+            $stmt->bind_param("isiis", $newId, $titre, $prix, $quantite, $filename);
+            $stmt->execute();
             // Exécuter la requête
-            if ($stmt->execute()) {
-                echo "Nouvel enregistrement inséré avec succès.";
-            } else {
-                echo "Erreur lors de l'insertion : " . $stmt->error;
-            }
+            // if ($stmt->execute()) {
+            //     echo "Nouvel enregistrement inséré avec succès.";
+            // } else {
+            //     echo "Erreur lors de l'insertion : " . $stmt->error;
+            // }
 
             // Fermer la requête et la connexion
             $stmt->close();
             
-            if (mysqli_connect_errno())
-            {
-                echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                exit();
-            }
+            // if (mysqli_connect_errno())
+            // {
+            //     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+            //     exit();
+            // }
+            // Redirection vers la page de l'admin
+            header("Location: admin.php");
+            exit(); 
             
             mysqli_close($link);
     } 

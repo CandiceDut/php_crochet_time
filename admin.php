@@ -1,17 +1,32 @@
 <?php
     // On démarre la session
-    session_start (); 
-    
-    ?>
+    session_start ();
 
-<!DOCTYPE html>
+    // On récupère nos variables de session
+    if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) 
+    {
+        $bdd= "zdavaud_bd"; 
+        $host= "lakartxela.iutbayonne.univ-pau.fr";
+        $user= "zdavaud_bd"; 
+        $pass= "zdavaud_bd"; 
+        $link= new mysqli($host,$user,$pass,$bdd);
+        if ($link->connect_error) {
+            die("Échec de la connexion : " . $conn->connect_error);
+        }
+    
+        // Récupérer les enregistrements de la table
+        $sql = "SELECT * FROM CROCHET";
+        $result = $link->query($sql);
+        ?>
+        
+        <!DOCTYPE html>
         <html lang="fr">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
             <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-            <title>Panier</title>
+            <title>Page choix action admin</title>
         </head>
         <body class='container'>
             <header>
@@ -37,32 +52,21 @@
                 </div>
             </nav>
             </header>
-        <h1>Articles choisis :</h1>
-<?php
 
-    // On récupère nos variables de session
-        $bdd= "zdavaud_bd"; 
-        $host= "lakartxela.iutbayonne.univ-pau.fr";
-        $user= "zdavaud_bd"; 
-        $pass= "zdavaud_bd"; 
-        $link= new mysqli($host,$user,$pass,$bdd);
-        if ($link->connect_error) {
-            die("Échec de la connexion : " . $conn->connect_error);
-        }
-    
-        // Récupérer les enregistrements de la table
-        if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
-        
-        $panier = implode(',', $_SESSION['panier']);
+        <p>Que souhaitez-vous faire ?</p>
 
-        $sql = "SELECT * FROM CROCHET WHERE id IN ($panier)";
-        $result = $link->query($sql);
-        ?>
+            <button class="btn btn-primary" onclick="window.location.href='ajout.php'">Ajouter</button>
+            <!-- <button class="btn btn-primary" onclick="window.location.href='suppression.php'">Supprimer</button> -->
+            <h1>Articles disponibles :</h1>
     
+            
+                <!--création tableau enregistrements-->
                 <table>
                         <tr>
                             <th>Titre</th>
-                            <th>Prix (en €)</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th class=d-none> Edit<th>
                             <th class=d-none> Suppr<th>
                         </tr>
                     
@@ -70,48 +74,58 @@
                     <?php
                     
                     // Afficher  enregistrements
-                    $total = 0;
                     echo "<tbody>";
                     while($row = $result->fetch_assoc()){
                         echo "<tr>";
                         echo "<td>" . $row['titre'] . "</td>";
                         echo "<td>" . $row['prix'] . "</td>";
+                        echo "<td>" . $row['quantite'] . "</td>";
                         echo "<td> 
-                            <form action='suppPanier.php' method='post'>
+                            <form action='editer.php' method='post'>
                             <input type='hidden' name='id' value='" . $row['id'] . "'>
-                            <input type='submit' class='btn btn-danger' name='suppr' value='X'>
+                            <input type='submit' class='btn btn-info' name='edit' value='Modifier'>
+                            </form>
+                            </td>";
+                        echo "<td> 
+                            <form action='suppression.php' method='post'>
+                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                            <input type='submit' class='btn btn-danger' name='suppr' value='Supprimer'>
                             </form>
                             </td>";
                         echo "</tr>";
-                        $total = $total + $row['prix'];
                     }
                     echo "</tbody>";
                     ?>
                 </table>
                 <br>
-    
-
-            <?php
-            // Afficher le prix total 
-            echo "prix total : " . $total . "€";?>
             
-            <form method="post" action="paiement.php">
-                <input type="hidden" name="prix" value="<?= $total ?>"><br>
-                <button type="submit" class="btn btn-secondary">Payer</button>
-            </form>
-            <br><a href="./logout.php">Tout supprimer</a>
-            <?php
-            $link->close();
-            
-
-        } else {
-            echo "Votre panier est vide.";
-        }?>
-       
-
-           
+           <br><a href="./logout.php">Déconnection</a>
     
         </body>
         </html>
+    
         <?php
-  
+        // Supprimer les enregistrements 
+        // if (isset($_POST['delete'])) {
+        //     if (!empty($_POST['ids'])) {
+        //         $ids = implode(",", $_POST['ids']);
+        //         $sql = "DELETE FROM CROCHET WHERE id IN ($ids)";
+        //         if ($link->query($sql) == TRUE) {
+        //             print "Enregistrements supprimés";
+        //         } else {
+        //             print "Erreur suppression : " . $link->error;
+        //         }
+        //     } else {
+        //         print "Aucun enregistrement sélectionné.";
+        //     }
+        // }
+        // $link->close();
+
+        
+    }
+
+    else 
+    {
+        header("Location: identification.html");
+    }
+    ?>
