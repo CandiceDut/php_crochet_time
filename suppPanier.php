@@ -1,22 +1,17 @@
 <?php
-session_start(); 
+session_start();
 
-// Vérifier si l'ID de l'article est envoyé via le formulaire
-if (isset($_POST['id_article'])) {
-    $id_article = $_POST['id_article'];
 
-    // Vérifier existence du panier
-    if (!isset($_SESSION['panier'])) {
-        $_SESSION['panier'] = []; 
-    }
 
-    // suppression id du panier
-    if (array_key_exists($id_article, $_SESSION['panier'])) {
-        unset($_SESSION['panier'][$id_article]);
-    }
-}    
+if (isset($_POST['id']) && isset($_SESSION['panier'])) {
+    $idToRemove = $_POST['id'];
+    if (($key = array_search($idToRemove, $_SESSION['panier'])) !== false) {
+    unset($_SESSION['panier'][$key]);}
+    
 
-// Rediriger vers la page précédente ou une autre page
-header('Location: panier.php'); 
-exit();
+    // Redirection vers la page du panier après suppression
+    header("Location: panier.php");
+    exit();
+}
 ?>
+
