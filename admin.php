@@ -61,7 +61,7 @@
     
             
                 <!--création tableau enregistrements-->
-                <table>
+                <table class="table">
                         <tr>
                             <th>Titre</th>
                             <th>Prix</th>
