@@ -62,6 +62,7 @@
                     <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
+                        <p> Qte : <?= $item['quantite']?> </p>
                         <form method="post" action="ajoutPanier.php">
                             <input type="hidden" name="id_article" value="<?= $item['id'] ?>">
                             <button type="submit" class="btn btn-secondary">Ajouter au panier</button>
