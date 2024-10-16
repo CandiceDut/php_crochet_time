@@ -58,7 +58,6 @@
         $result = $link->query($sql);
         ?>
     
-            <form method="post" action="">
                 <table>
                         <tr>
                             <th>Titre</th>
@@ -71,8 +70,8 @@
                     
                     // Afficher  enregistrements
                     $total = 0;
+                    echo "<tbody>";
                     while($row = $result->fetch_assoc()){
-                        echo "<tbody>";
                         echo "<tr>";
                         echo "<td>" . $row['titre'] . "</td>";
                         echo "<td>" . $row['prix'] . "</td>";
@@ -83,14 +82,13 @@
                             </form>
                             </td>";
                         echo "</tr>";
-                        echo "</tbody>";
                         $total = $total + $row['prix'];
                     }
+                    echo "</tbody>";
                     ?>
                 </table>
                 <br>
     
-            </form>
 
             <?php
             // Afficher le prix total 
