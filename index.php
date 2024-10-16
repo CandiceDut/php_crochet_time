@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
     <link rel="stylesheet" href="styles.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <title>Crochet</title>
 </head>
 <body class='container'>
@@ -61,6 +62,7 @@
                     <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
+                        <p> Qte : <?= $item['quantite']?> </p>
                         <form method="post" action="ajoutPanier.php">
                             <input type="hidden" name="id_article" value="<?= $item['id'] ?>">
                             <button type="submit" class="btn btn-secondary">Ajouter au panier</button>
