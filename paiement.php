@@ -1,22 +1,58 @@
 <?php
     session_start (); 
 
+    $bdd= "zdavaud_bd"; 
+    $host= "lakartxela.iutbayonne.univ-pau.fr";
+    $user= "zdavaud_bd"; 
+    $pass= "zdavaud_bd"; 
+    $link = new mysqli($host, $user, $pass, $bdd);
+    if ($link->connect_error) {
+        die("Échec de la connexion : " . $link->connect_error);
+    }
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['carte']) && isset($_POST['date'])) {
         $inputDate = $_POST['date'];
         $inputDateTime = DateTime::createFromFormat('m/y', $inputDate);
         
-        $currentDate = new DateTime();
-        $threeMonthsLater = clone $currentDate;
-        $threeMonthsLater->modify('+3 months');
+        $dateAjd = new DateTime();
+        $dateLimite = clone $dateAjd;
+        $dateLimite->modify('+3 months');
         
-        if ($inputDateTime > $threeMonthsLater /*&& $_POST['carte'][0]==$_POST['carte'][-1]*/) {
-            header("Location: index.php");
+        if ($inputDateTime > $dateLimite && $_POST['carte'][0]==$_POST['carte'][-1]) 
+        {
+            foreach ($_SESSION['panier'] as $id => $qt) {
+                $sql = "SELECT quantite FROM CROCHET WHERE id = $id";
+                $result= mysqli_query($link,$sql);
+                if (mysqli_connect_errno())
+                {
+                    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                    exit();
+                }
+        
+                
+                if ($result) {
+                    $reste = $result->fetch_assoc()['quantite'];
+                    // Calculer la nouvelle quantité
+                    $qtMaJ = $reste - $qt;
+
+                    // Mettre à jour la quantité dans la base de données
+                    $mAj = "UPDATE CROCHET SET quantite = $qtMaJ WHERE id = $id";
+                    $updateStmt = $link->prepare($mAj);
+                    $updateStmt->execute();
+                }
+
+            }
+        
+
+            mysqli_close($link);
+            header("Location: logout.php");
             exit();
         } else {
             header("Location: panier.php");
             exit();
         }
     }
+    
 ?>
 
 
@@ -26,6 +62,7 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.css'>
+            <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
             <title>Paiement</title>
         </head>
         <body class='container'>
