@@ -52,40 +52,43 @@
         // Récupérer les enregistrements de la table
         if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
         
-        $panier = implode(',', $_SESSION['panier']);
+        
+        $panier = implode(',', array_keys($_SESSION['panier']));
 
         $sql = "SELECT * FROM CROCHET WHERE id IN ($panier)";
         $result = $link->query($sql);
         ?>
     
-                <table>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Prix (en €)</th>
-                            <th class=d-none> Suppr<th>
-                        </tr>
-                    
-    
+            <table class='table'>
+                    <tr>
+                        <th>Titre </th>
+                        <th> Qte </th>
+                        <th> Prix (en €) </th>
+                        <th class=d-none> Suppr<th>
+                    </tr>
+                
+
                     <?php
-                    
-                    // Afficher  enregistrements
-                    $total = 0;
-                    echo "<tbody>";
-                    while($row = $result->fetch_assoc()){
-                        echo "<tr>";
-                        echo "<td>" . $row['titre'] . "</td>";
-                        echo "<td>" . $row['prix'] . "</td>";
-                        echo "<td> 
-                            <form action='suppPanier.php' method='post'>
-                            <input type='hidden' name='id' value='" . $row['id'] . "'>
-                            <input type='submit' class='btn btn-danger' name='suppr' value='X'>
-                            </form>
-                            </td>";
-                        echo "</tr>";
-                        $total = $total + $row['prix'];
-                    }
-                    echo "</tbody>";
-                    ?>
+                
+                // Afficher  enregistrements
+                $total = 0;
+                echo "<tbody>";
+                while($row = $result->fetch_assoc()){
+                    echo "<tr>";
+                    echo "<td>" . $row['titre'] . "</td>";
+                    echo "<td>" . $_SESSION['panier'][$row['id']] . "</td>";
+                    echo "<td>" . $row['prix'] . "</td>";
+                    echo "<td> 
+                        <form action='suppPanier.php' method='post'>
+                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                        <input type='submit' class='btn btn-danger' name='suppr' value='X'>
+                        </form>
+                        </td>";
+                    echo "</tr>";
+                    $total = $total + $row['prix'];
+                }
+                echo "</tbody>";
+                ?>
                 </table>
                 <br>
     
