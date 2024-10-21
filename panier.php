@@ -1,8 +1,22 @@
 <?php
-    // On démarre la session
     session_start (); 
-    
-    ?>
+
+    if (isset($_POST['id']) && isset($_POST['action'])) {
+        $id = $_POST['id'];
+
+        if ($_POST['action'] == 'plus' && $_SESSION['panier'][$id] < $_POST['qt']) {
+            $_SESSION['panier'][$id]++;
+        } 
+        elseif ($_POST['action'] == 'moins' && $_SESSION['panier'][$id] > 1) //diminuer sans aller en dessous de 1
+        {
+
+            $_SESSION['panier'][$id]--;
+        }
+
+        header('Location: panier.php');
+    }
+
+?>
 
 <!DOCTYPE html>
         <html lang="fr">
@@ -76,7 +90,18 @@
                 while($row = $result->fetch_assoc()){
                     echo "<tr>";
                     echo "<td>" . $row['titre'] . "</td>";
-                    echo "<td>" . $_SESSION['panier'][$row['id']] . "</td>";
+                    echo "<td>
+                        <form action='panier.php' method='post' style='display:inline-block;'>
+                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                            <button type='submit' name='action' value='moins' class='btn btn-light'>-</button>
+                        </form>
+                        " . $_SESSION['panier'][$row['id']] . "
+                        <form action='panier.php' method='post' style='display:inline-block;'>
+                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                            <input type='hidden' name='qt' value='" . $row['quantite'] . "'>
+                            <button type='submit' name='action' value='plus' class='btn btn-light'>+</button>
+                        </form>
+                        </td>";
                     echo "<td>" . $row['prix'] . "</td>";
                     echo "<td> 
                         <form action='suppPanier.php' method='post'>
@@ -85,7 +110,7 @@
                         </form>
                         </td>";
                     echo "</tr>";
-                    $total = $total + $row['prix'];
+                    $total = $total + $row['prix']* $_SESSION['panier'][$row['id']];
                 }
                 echo "</tbody>";
                 ?>
@@ -115,5 +140,4 @@
     
         </body>
         </html>
-        <?php
   
