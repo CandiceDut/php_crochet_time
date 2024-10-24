@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $titre = $link->real_escape_string(trim($_POST['titre']));
     $prix = (float)$_POST['prix'];
     $quantite = (int)$_POST['quantite'];
+    $description = $link->real_escape_string(trim($_POST['description']));
     
     // Gestion de l'image
     $image = null;
@@ -37,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     }
 
     // Mise à jour de l'article
-    $sql = "UPDATE CROCHET SET titre = '$titre', prix = $prix, quantite = $quantite" . ($image ? ", urlimage = '$image'" : "") . " WHERE id = $id";
+    $sql = "UPDATE CROCHET SET titre = '$titre', prix = $prix, quantite = $quantite" . ($image ? ", urlimage = '$image'" : "") . ", description = '$description' WHERE id = $id";
     $link->query($sql);
     // if ( === TRUE) {
     //     echo "Article mis à jour avec succès.";
