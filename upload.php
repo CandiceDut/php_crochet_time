@@ -9,12 +9,7 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'])
         $uploadFile = $uploadDir . $filename;
 
         move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile);
-        // if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $uploadFile)) {
-        //     echo "<p>Le fichier $filename a été téléchargé avec succès dans le dossier $uploadDir.</p>";                
-        // }
-        // else {
-        //     echo "<p>Erreur lors du téléchargement du fichier $filename.</p>";
-        // }
+ 
 
         $titre = $_POST['Titre'];
         $prix = (int)$_POST['Prix'];

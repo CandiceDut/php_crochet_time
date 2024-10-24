@@ -1,8 +1,22 @@
 <?php
-    // On démarre la session
     session_start (); 
-    
-    ?>
+
+    if (isset($_POST['id']) && isset($_POST['action'])) {
+        $id = $_POST['id'];
+
+        if ($_POST['action'] == 'plus' && $_SESSION['panier'][$id] < $_POST['qt']) {
+            $_SESSION['panier'][$id]++;
+        } 
+        elseif ($_POST['action'] == 'moins' && $_SESSION['panier'][$id] > 1) //diminuer sans aller en dessous de 1
+        {
+
+            $_SESSION['panier'][$id]--;
+        }
+
+        header('Location: panier.php');
+    }
+
+?>
 
 <!DOCTYPE html>
         <html lang="fr">
@@ -53,40 +67,54 @@
         // Récupérer les enregistrements de la table
         if (isset($_SESSION['panier']) && !empty($_SESSION['panier'])) {
         
-        $panier = implode(',', $_SESSION['panier']);
+        
+        $panier = implode(',', array_keys($_SESSION['panier']));
 
         $sql = "SELECT * FROM CROCHET WHERE id IN ($panier)";
         $result = $link->query($sql);
         ?>
     
-                <table>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Prix (en €)</th>
-                            <th class=d-none> Suppr<th>
-                        </tr>
-                    
-    
+            <table class='table'>
+                    <tr>
+                        <th>Titre </th>
+                        <th> Qte </th>
+                        <th> Prix (en €) </th>
+                        <th class=d-none> Suppr<th>
+                    </tr>
+                
+
                     <?php
-                    
-                    // Afficher  enregistrements
-                    $total = 0;
-                    echo "<tbody>";
-                    while($row = $result->fetch_assoc()){
-                        echo "<tr>";
-                        echo "<td>" . $row['titre'] . "</td>";
-                        echo "<td>" . $row['prix'] . "</td>";
-                        echo "<td> 
-                            <form action='suppPanier.php' method='post'>
+                
+                // Afficher  enregistrements
+                $total = 0;
+                echo "<tbody>";
+                while($row = $result->fetch_assoc()){
+                    echo "<tr>";
+                    echo "<td>" . $row['titre'] . "</td>";
+                    echo "<td>
+                        <form action='panier.php' method='post' style='display:inline-block;'>
                             <input type='hidden' name='id' value='" . $row['id'] . "'>
-                            <input type='submit' class='btn btn-danger' name='suppr' value='X'>
-                            </form>
-                            </td>";
-                        echo "</tr>";
-                        $total = $total + $row['prix'];
-                    }
-                    echo "</tbody>";
-                    ?>
+                            <button type='submit' name='action' value='moins' class='btn btn-light'>-</button>
+                        </form>
+                        " . $_SESSION['panier'][$row['id']] . "
+                        <form action='panier.php' method='post' style='display:inline-block;'>
+                            <input type='hidden' name='id' value='" . $row['id'] . "'>
+                            <input type='hidden' name='qt' value='" . $row['quantite'] . "'>
+                            <button type='submit' name='action' value='plus' class='btn btn-light'>+</button>
+                        </form>
+                        </td>";
+                    echo "<td>" . $row['prix'] . "</td>";
+                    echo "<td> 
+                        <form action='suppPanier.php' method='post'>
+                        <input type='hidden' name='id' value='" . $row['id'] . "'>
+                        <input type='submit' class='btn btn-danger' name='suppr' value='X'>
+                        </form>
+                        </td>";
+                    echo "</tr>";
+                    $total = $total + $row['prix']* $_SESSION['panier'][$row['id']];
+                }
+                echo "</tbody>";
+                ?>
                 </table>
                 <br>
     
@@ -113,5 +141,4 @@
     
         </body>
         </html>
-        <?php
   

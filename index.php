@@ -40,6 +40,7 @@
         $host= "lakartxela.iutbayonne.univ-pau.fr";
         $user= "zdavaud_bd"; 
         $pass= "zdavaud_bd"; 
+
         $link=mysqli_connect($host,$user,$pass,$bdd) or die( "Impossible de se connecter à la base de données");
         $query = "SELECT * FROM CROCHET";
         $result= mysqli_query($link,$query);
@@ -52,19 +53,23 @@
         
         ?>
 
-        <div id="zone_cartes" class="row row-cols-5">
+        <div  class="row row-cols-5">
 
             <?php
             foreach ($result as $item) {
+                if ($item['quantite']>0) {
+                
                 ?>
+                
                 <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>"class ="col mb-3">
-                <div class="card" style="width: 10rem;">
-                    <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top">
+                <div class="card" style="width: 13rem;">
+                    <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top" alt="">
                     <div class="card-body bg-primary">
                         <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
                         <p> Qte : <?= $item['quantite']?> </p>
                         <form method="post" action="ajoutPanier.php">
                             <input type="hidden" name="id_article" value="<?= $item['id'] ?>">
+                            <input type="hidden" name="qt_article" value="<?= $item['quantite'] ?>">
                             <button type="submit" class="btn btn-secondary">Ajouter au panier</button>
                         </form>
                     </div>
@@ -73,7 +78,8 @@
 
 
 
-            <?php } ?>
+        <?php } 
+        } ?>
 
         </div>
     </main>
