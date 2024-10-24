@@ -53,15 +53,12 @@
             </nav>
             </header>
 
-        <p>Que souhaitez-vous faire ?</p>
-
-            <button class="btn btn-primary" onclick="window.location.href='ajout.php'">Ajouter</button>
-            <!-- <button class="btn btn-primary" onclick="window.location.href='suppression.php'">Supprimer</button> -->
-            <h1>Articles disponibles :</h1>
+            <h1>Articles disponibles : </h1>
     
             
                 <!--création tableau enregistrements-->
                 <table class="table">
+                <button class="btn btn-primary" onclick="window.location.href='ajout.php'">Ajouter</button>
                         <tr>
                             <th>Titre</th>
                             <th>Prix</th>
