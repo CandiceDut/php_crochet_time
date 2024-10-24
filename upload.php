@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'])) {
+if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'], $_POST['Description'])) {
     $uploadDir = 'Images/';
     $fileKey = 'image';
 
@@ -15,6 +15,7 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'])
         $prix = (int)$_POST['Prix'];
         $quantite = (int)$_POST['Quantite'];
         $image = $_FILES['image'];
+        $desc = $_POST['Description'];
         
         $bdd= "zdavaud_bd"; 
             $host= "lakartxela.iutbayonne.univ-pau.fr";
@@ -31,11 +32,11 @@ if (isset($_POST['Titre'], $_POST['Prix'], $_POST['Quantite'], $_FILES['image'])
             $newId = $result->fetch_assoc()['newId'];
             
             //Insertion du nouvel article
-            $stmt = $link->prepare("INSERT INTO CROCHET (id, titre, prix, quantite, urlimage) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $link->prepare("INSERT INTO CROCHET (id, titre, prix, quantite, urlimage, description) VALUES (?, ?, ?, ?, ?, ?)");
             if ($stmt === false) {
                 die("Erreur lors de la préparation de la requête : " . $link->error);
             }
-            $stmt->bind_param("isiis", $newId, $titre, $prix, $quantite, $filename);
+            $stmt->bind_param("isiiss", $newId, $titre, $prix, $quantite, $filename, $desc);
             $stmt->execute();
             // Exécuter la requête
             // if ($stmt->execute()) {

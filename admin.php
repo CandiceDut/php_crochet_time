@@ -66,6 +66,7 @@
                             <th>Titre</th>
                             <th>Prix</th>
                             <th>Quantité</th>
+                            <th>Description</th>
                             <th class=d-none> Edit<th>
                             <th class=d-none> Suppr<th>
                         </tr>
@@ -80,6 +81,7 @@
                         echo "<td>" . $row['titre'] . "</td>";
                         echo "<td>" . $row['prix'] . "</td>";
                         echo "<td>" . $row['quantite'] . "</td>";
+                        echo "<td>" . $row['description'] . "</td>";
                         echo "<td> 
                             <form action='editer.php' method='post'>
                             <input type='hidden' name='id' value='" . $row['id'] . "'>
@@ -105,22 +107,6 @@
         </html>
     
         <?php
-        // Supprimer les enregistrements 
-        // if (isset($_POST['delete'])) {
-        //     if (!empty($_POST['ids'])) {
-        //         $ids = implode(",", $_POST['ids']);
-        //         $sql = "DELETE FROM CROCHET WHERE id IN ($ids)";
-        //         if ($link->query($sql) == TRUE) {
-        //             print "Enregistrements supprimés";
-        //         } else {
-        //             print "Erreur suppression : " . $link->error;
-        //         }
-        //     } else {
-        //         print "Aucun enregistrement sélectionné.";
-        //     }
-        // }
-        // $link->close();
-
         
     }
 

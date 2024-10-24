@@ -47,6 +47,7 @@
         print "Titre <br><INPUT TYPE='TEXT' NAME='Titre' SIZE='20' MAXSIZE='50' ><BR>";
         print "Prix<br><INPUT TYPE='TEXT' NAME='Prix' SIZE='20' MAXSIZE='50' ><BR>";
         print "Quantité<br><INPUT TYPE='INT' NAME='Quantite' SIZE='20' MAXSIZE='50' ><BR>";
+        print "Description<br><INPUT TYPE='TEXT' NAME='Description' SIZE='20' MAXSIZE='500' ><BR>";
         print "Image<br><input type='file' name='image'<br><br><BR>";
        
         print "<br><INPUT TYPE='SUBMIT' VALUE='OK'></form>";
