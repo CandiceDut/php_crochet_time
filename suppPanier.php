@@ -2,8 +2,9 @@
 session_start();
 if (isset($_POST['id']) && isset($_SESSION['panier'])) {
     $idToRemove = $_POST['id'];
-    if (($key = array_search($idToRemove, $_SESSION['panier'])) !== false) {
-        unset($_SESSION['panier'][$key]);
+
+   if (isset($_SESSION['panier'][$idToRemove])) {
+        unset($_SESSION['panier'][$idToRemove]);
     }
     
     // Redirection vers la page du panier après suppression
@@ -11,4 +12,3 @@ if (isset($_POST['id']) && isset($_SESSION['panier'])) {
     exit();
 }
 ?>
-

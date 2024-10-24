@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+    // On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
+    session_start ();
+
+    ?>
+    <!DOCTYPE html>
         <html lang="fr">
         <head>
             <meta charset="UTF-8">
@@ -31,5 +36,51 @@
                 </div>
             </nav>
             </header>
+            <main>
+            <?php
+            $bdd= "zdavaud_bd"; 
+            $host= "lakartxela.iutbayonne.univ-pau.fr";
+            $user= "zdavaud_bd"; 
+            $pass= "zdavaud_bd";
+            $link= new mysqli($host,$user,$pass,$bdd);
+            if ($link->connect_error) {
+                die("Échec de la connexion : " . $conn->connect_error);
+            }
+            // editer les enregistrements 
+            if (isset($_POST['id'])) {
+                $idToEdit = $_POST['id'];?>
+                <h1>Modifier le doudou <?= $_POST['titre']?> </h1>
+                <?php
+                $sql = "SELECT * FROM CROCHET WHERE id = $idToEdit";
+                $titre = $_POST['Titre'];
+                $prix = (int)$_POST['Prix'];
+                $quantite = (int)$_POST['Quantite'];
+                $image = $_FILES['image'];
+                if ($link->query($sql) == TRUE) {
+                    print "ok";
+                } else {
+                    print "Erreur suppression : " . $link->error;
+                }
+            }           
+    
+            $link->close();
+            
+            ?>
+
+                    <!-- <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>"> -->
+                    <div>
+                        <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>">
+                        <div>
+                            <h5><?= $item['titre']?> <br> <?=$item['prix'] ?> € </h5>
+                            <p> Qte : <?= $item['quantite']?> </p>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- </a> -->
+
+
+
+            </div>
+        </main>
 </body>
 </html>
