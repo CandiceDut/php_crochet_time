@@ -61,7 +61,7 @@
                 
                 ?>
                 
-                <a href="imagesGrde.php?image=<?=$item['urlimage'] ?>"class ="col mb-3">
+                <a href="article.php?image=<?=$item['urlimage']?>&id=<?=$item['id']?>&titre=<?=$item['titre']?>&prix=<?=$item['prix']?>&quantite=<?=$item['quantite']?>&desc=<?=$item['description']?>" class="col mb-3">
                 <div class="card" style="width: 13rem;">
                     <img src="imagesPetites.php?image=<?= $item['urlimage'] ?>" class="card-img-top" alt="">
                     <div class="card-body bg-primary">
@@ -84,11 +84,18 @@
         </div>
     </main>
     <div id="notifications"></div>
+    
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="Notify.js"></script>
 <script>
-	Notify("Can't Touch This");
-
+    $(document).ready(function() {
+        var notification = <?php echo json_encode($_SESSION['notification'] ?? null); ?>;
+        if (notification) {
+            Notify(notification,null,null,'success');
+            // Supprime la notification de la session après l'affichage
+            <?php unset($_SESSION['notification']); ?>
+        }
+    });
 </script>
 </body>
 </html>

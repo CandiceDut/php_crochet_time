@@ -45,7 +45,11 @@
         
 
             mysqli_close($link);
-            header("Location: logout.php");
+            
+
+            session_unset ();
+            $_SESSION['notification'] = "Paiement enregistré";
+            header("Location: index.php");
             exit();
         } else {
             header("Location: panier.php");
@@ -92,13 +96,13 @@
         <?php
             if (isset($_POST['prix'])) {
                 $prix = $_POST['prix'];
-                echo "<h3>Prix : ".$prix."€</h3>";
+                echo "<br><h3>Prix : ".$prix."€</h3><br>";
             }
         ?>
             <form action="paiement.php" method="post">
-            Numero de carte : <input type="text" name="carte" required minlength=16 maxlength=16 placeholder="Ex : 12345678925478931"> 
+            Numero de carte : <input type="text" class="form-control" name="carte" required minlength=16 maxlength=16 placeholder="Ex : 12345678925478931"> 
             <br />
-            Date : <input type="text" class="form-control" name="date" id="date" pattern="(0[1-9]|1[0-2])/\d{2}" placeholder="Ex : 01/26"><br />
+            Date : <input type="text" class="form-control" name="date" id="date" pattern="(0[1-9]|1[0-2])/\(0-9){2}" placeholder="Ex : 01/26"><br />
             <input type="submit" name="payer" value="Payer">
         </body>
         
