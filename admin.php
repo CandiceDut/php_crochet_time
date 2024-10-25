@@ -58,7 +58,6 @@
             
                 <!--création tableau enregistrements-->
                 <table class="table">
-                <button class="btn btn-primary" onclick="window.location.href='ajout.php'">Ajouter</button>
                         <tr>
                             <th>Titre</th>
                             <th>Prix</th>
@@ -97,6 +96,7 @@
                     ?>
                 </table>
                 <br>
+                <button class="btn btn-primary" onclick="window.location.href='ajout.php'">Ajouter</button> <br>
             
            <br><a href="./logout.php">Déconnection</a>
     
